@@ -1,0 +1,139 @@
+﻿@model ProyectoFinalAgenciaTours.Application.DTOs.LoginUsuarioDto
+
+@{
+    Layout = "_BlankLayout";
+    ViewData["Title"] = "Login Basic - Pages";
+}
+
+@section VendorStyles {
+    <link rel="stylesheet" href="~/vendor/libs/&#64;form-validation/form-validation.css" />
+}
+
+@section VendorScripts {
+    <script src="~/vendor/libs/&#64;form-validation/popular.js"></script>
+    <script src="~/vendor/libs/&#64;form-validation/bootstrap5.js"></script>
+    <script src="~/vendor/libs/&#64;form-validation/auto-focus.js"></script>
+}
+
+@section PageStyles {
+    <link rel="stylesheet" href="~/vendor/css/pages/page-auth.css" />
+}
+
+@section PageScripts {
+    <script src="~/js/pages-auth.js"></script>
+}
+@*<h1>Login</h1>
+
+    <h4>Iniciar session</h4>
+    <hr />
+    <div class="row">
+        @if (@TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @TempData["SuccessMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @TempData.Remove("SuccessMessage");
+        }
+        <div class="col-md-4">
+            <form asp-action="Login">
+                <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" type="password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <a class="form-check-label" href="@Url.Action("Register", "Account")">No tienen una cuenta? Registrate Aquí!</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Login" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>*@
+
+
+
+<div class="position-relative">
+
+    <div class="authentication-wrapper authentication-basic container-p-y p-4 p-sm-0">
+
+        <div class="authentication-inner py-6">
+            <!-- Login -->
+            <div class="card p-md-7 p-1">
+                <!-- Logo -->
+                <div class="app-brand justify-content-center mt-5">
+                    <a href="/" class="app-brand-link gap-2">
+                        <span class="app-brand-logo demo">@await Html.PartialAsync("../_Partials/_Macros")</span>
+                        <span class="app-brand-text demo text-heading fw-semibold">@TempData.Peek("appName")</span>
+                    </a>
+                </div>
+                <!-- /Logo -->
+                <div class="card-body mt-1">
+                    <h4 class="mb-1">Bienvenido a @TempData.Peek("appName")! 👋</h4>
+                    <p class="mb-5">Por favor sign-in con su cuenta y empiece la aventura</p>
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    @if (TempData["Error"] is string msg)
+                    {
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            @msg
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        TempData.Remove("Error");
+                    }
+
+                    @if (@TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            @TempData["SuccessMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        TempData.Remove("SuccessMessage");
+                    }
+                    <form id="formAuthentication" class="mb-5" asp-action="Login">
+                        <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+                        <div class="form-floating form-floating-outline mb-5 form-control-validation">
+                            <input type="text" class="form-control" asp-for="Email" placeholder="Enter your email or username" autofocus />
+                            <label asp-for="Email">Email</label>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="mb-5">
+                            <div class="form-password-toggle form-control-validation">
+                                <div class="input-group input-group-merge">
+                                    <div class="form-floating form-floating-outline">
+                                        <input type="password" asp-for="Password" class="form-control" name="Password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
+                                        <label asp-for="Password">Password</label>
+                                    </div>
+                                    <span class="input-group-text cursor-pointer"><i class="icon-base ri ri-eye-off-line icon-20px"></i></span>
+                                </div>
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
+                        </div>
+                    </form>
+
+                    <p class="text-center mb-5">
+                        <span>Nuevo en la Plataforma?</span>
+                        <a href="@Url.Action("Register", "Account") ">
+                            <span>Crear una nueva cuenta</span>
+                        </a>
+                    </p>
+
+                </div>
+            </div>
+            <!-- /Login -->
+            <img alt="mask" src="~/img/illustrations/auth-basic-login-mask-light.png" class="authentication-image d-none d-lg-block" data-app-light-img="illustrations/auth-basic-login-mask-light.png" data-app-dark-img="illustrations/auth-basic-login-mask-dark.png" />
+        </div>
+    </div>
+</div>

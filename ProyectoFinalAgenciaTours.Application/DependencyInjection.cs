@@ -15,6 +15,8 @@ namespace ProyectoFinalAgenciaTours.Application
 
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
+            services.AddScoped<ILoginService, LoginService>();
+
             return services;
         }
 

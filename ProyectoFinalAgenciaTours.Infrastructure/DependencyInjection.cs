@@ -19,6 +19,12 @@ namespace ProyectoFinalAgenciaTours.Infrastructure
             services.AddDbContext<ApplicationDbContext>(option =>
             option.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddAuthentication().AddCookie("MyCookieAuth", options =>
+            {
+                options.Cookie.Name = "MyCookieAuth";
+                options.LoginPath = "/Account/Login";
+            });
+
             return services;
         }
     }
