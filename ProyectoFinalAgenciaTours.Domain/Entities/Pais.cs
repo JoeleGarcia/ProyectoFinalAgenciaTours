@@ -10,18 +10,19 @@ namespace ProyectoFinalAgenciaTours.Domain.Entities
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
-
-
-        public string Moneda { get; set; } // Ejemplo: "DOP", "USD"
+        public string CodigoISO { get; set; }
+        public string Moneda { get; set; } 
         public string IdiomaOficial { get; set; }
-        public string ZonaHoraria { get; set; } // Ejemplo: "America/Santo_Domingo"
         public bool RequiereVisa { get; set; }
+        public bool Status { get; set; }
 
         public ICollection<Destinos> Destinos { get; set; }
 
         public Pais()
         {
             FechaCreacion = DateTime.UtcNow;
+            Status = true;
+            IdiomaOficial = "N/A";
         }
 
 
