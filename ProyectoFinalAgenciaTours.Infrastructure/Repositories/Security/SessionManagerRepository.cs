@@ -22,7 +22,7 @@ namespace ProyectoFinalAgenciaTours.Infrastructure.Repositories.Security
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task SignInAsync(UsuarioDto user)
+        public async Task SignInAsync(Usuario user)
         {
             string nombreCompleto = string.Format("{0} {1}", user.Nombre, user.Apellido);
 
