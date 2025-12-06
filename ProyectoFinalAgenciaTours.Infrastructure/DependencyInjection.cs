@@ -2,7 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ProyectoFinalAgenciaTours.Application.Interfaces;
+using ProyectoFinalAgenciaTours.Application.Services;
+using ProyectoFinalAgenciaTours.Domain.Interfaces;
 using ProyectoFinalAgenciaTours.Infrastructure.Data;
+using ProyectoFinalAgenciaTours.Infrastructure.Repositories;
 using ProyectoFinalAgenciaTours.Infrastructure.Repositories.Security;
 using System;
 using System.Collections.Generic;
@@ -18,6 +21,11 @@ namespace ProyectoFinalAgenciaTours.Infrastructure
         {
             services.AddDbContext<ApplicationDbContext>(option =>
             option.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ISessionManager, SessionManagerRepository>();
+            services.AddScoped<IPaisRepository, PaisRepository>();
+
 
             services.AddAuthentication().AddCookie("MyCookieAuth", options =>
             {
