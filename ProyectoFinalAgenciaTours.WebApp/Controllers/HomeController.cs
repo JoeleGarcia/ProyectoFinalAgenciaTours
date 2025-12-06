@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProyectoFinalAgenciaTours.WebApp.Models;
 using System.Diagnostics;
@@ -12,7 +13,8 @@ namespace ProyectoFinalAgenciaTours.WebApp.Controllers
         {
             _logger = logger;
         }
-
+        
+        [Authorize]
         public IActionResult Index()
         {
             return View();
