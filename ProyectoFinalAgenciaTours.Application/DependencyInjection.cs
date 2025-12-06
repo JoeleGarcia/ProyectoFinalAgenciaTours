@@ -16,7 +16,10 @@ namespace ProyectoFinalAgenciaTours.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<IPaisService, PaisService>();
 
+
+            services.AddAutoMapper(typeof(DependencyInjection).Assembly);
             return services;
         }
 
