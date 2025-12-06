@@ -5,7 +5,7 @@ namespace ProyectoFinalAgenciaTours.Application.Interfaces
 {
     public interface ISessionManager
     {
-        Task SignInAsync(UsuarioDto user);
+        Task SignInAsync(Usuario user);
         Task SignOutAsync();
 
     }
