@@ -19,6 +19,10 @@ namespace ProyectoFinalAgenciaTours.Application.Mapping
             CreateMap<CreatePaisDto, Pais>();
             CreateMap<UpdatePaisDto, Pais>();
 
+            CreateMap<DestinoDto, Destino>();
+            CreateMap<CreateDestinoDto, Destino>();
+            CreateMap<UpdateDestinoDto, Destino>();
+
         }
     }
 }
