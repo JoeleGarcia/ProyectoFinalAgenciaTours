@@ -1,8 +1,8 @@
-﻿@model IEnumerable<ProyectoFinalAgenciaTours.Application.DTOs.PaisDto>;
+﻿@model IEnumerable<ProyectoFinalAgenciaTours.Application.DTOs.DestinoDto>;
 @using Newtonsoft.Json;
 
 @{
-    ViewData["Title"] = "Pais - CRUD";
+    ViewData["Title"] = "Destinos - CRUD";
     ViewData["statusClass"] = "";
 
 }
@@ -28,8 +28,8 @@
 
 
 @section PageScripts {
-    <script src="~/js/pais-delete.js"></script>
-    <script src="~/js/pais-list.js"></script>
+    <script src="~/js/destino-delete.js"></script>
+    <script src="~/js/destino-list.js"></script>
 }
 
 @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
@@ -79,16 +79,16 @@
                 <tr class="text-nowrap">
                     <th></th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Nombre)
+                        Destino
+                        @*@Html.DisplayNameFor(model => model.Nombre)*@
+                    </th>
+                    <th class="text-center" >
+                        @*@Html.DisplayNameFor(model => model.CapacidadMaxima)*@
+                        Capacidad
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.CodigoISO)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Moneda)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.RequiereVisa)
+                        Tipo Destino
+                        @*@Html.DisplayNameFor(model => model.TipoDestino)*@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.FechaCreacion)
@@ -102,11 +102,11 @@
             <tbody>
                 @if (Model?.Any() == true)
                 {
-                    @foreach (var pais in Model)
+                    @foreach (var destino in Model)
                     {
                         string statusClass = "info"; // Default value if item.Status is null or doesn't match any case
 
-                        bool lowerCaseStatus = pais.Status;
+                        bool lowerCaseStatus = destino.Status;
 
                         if (lowerCaseStatus.Equals(true))
                         {
@@ -119,49 +119,47 @@
 
                         <tr>
                             <td></td>
-                            <td class="text-nowrap fw-medium text-heading">
-                                @Html.DisplayFor(modelItem => pais.Nombre)
-                            </td>
-                            <td class="d-flex align-items-center pt-5">
-                                @*<img src="https://raw.githubusercontent.com/ashhitch/ISO-country-flags-icons/refs/heads/master/src/flags/png/@(pais.CodigoISO.ToLower()).png" alt="Mobile" width="34" height="34" class="rounded">*@
-                                
-                                <div class="avatar avatar-sm flex-shrink-0 me-4">
-                                    <i class="fis fi fi-@(pais.CodigoISO.ToLower()) rounded-circle fs-3"></i>
-                                </div>
-                                <h6 class="mb-0">@(pais.CodigoISO)</h6>
-                            </td>
-                            <td class="text-nowrap fw-medium text-heading">
-                                @Html.DisplayFor(modelItem => pais.Moneda)
-                            </td>
-                            <td>
-                                <div>
-                                    @if (pais.RequiereVisa.Equals(true))
-                                    {
-                                        @("Si");
-
-                                    }
-
-                                    @if (pais.RequiereVisa.Equals(false))
-                                    {
-                                        @("No");
-                                    }
-
+                            <td class="sorting_1">
+                                <div class="d-flex justify-content-start align-items-center user-name">
+                                    <div class="avatar-wrapper">
+                                        <div class="avatar avatar-sm me-4">
+                                            <img src="https://raw.githubusercontent.com/ashhitch/ISO-country-flags-icons/refs/heads/master/src/flags/png/@(
+                                            destino.Pais.CodigoISO.ToLower()
+                                            ).png" alt="Avatar" class="rounded-circle">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <a href="app-user-view-account.html" class="text-heading text-truncate">
+                                            <span class="fw-medium text-primary">@Html.DisplayFor(modelItem => destino.Nombre)
+                                            </span>
+                                        </a>
+                                        <small>@Html.DisplayFor(modelItem => destino.Pais.Nombre)</small>
+                                    </div>
                                 </div>
                             </td>
+                            <td class="small text-center py-2">
+                                @*<div class="avatar-initial py-2 bg-label-primary rounded">
+                                    @(destino.CapacidadMaxima)
+                                </div>*@
+                                <span class="start-100 badge rounded-pill bg-primary">@(destino.CapacidadMaxima)</span>
+                            </td>
                             <td class="text-nowrap fw-medium text-heading">
-                                @Html.DisplayFor(modelItem => pais.FechaCreacion)
+                                @Html.DisplayFor(modelItem => destino.TipoDestino)
+                            </td>
+                            <td class="text-nowrap fw-medium text-heading">
+                                @destino.FechaCreacion.ToString("dd/MM/yyyy")
                             </td>
                             <td>
                                 <div class="badge bg-label-@statusClass rounded-pill">
 
 
-                                    @if (pais.Status.Equals(true))
+                                    @if (destino.Status.Equals(true))
                                     {
                                         @("Activo");
 
                                     }
 
-                                    @if (pais.Status.Equals(false))
+                                    @if (destino.Status.Equals(false))
                                     {
                                         @("Inactivo");
                                     }
@@ -169,8 +167,8 @@
                                 </div>
                             </td>
                             <td class="text-nowrap">
-                                <a asp-action="Update" asp-route-id="@pais.Id" class="btn btn-sm btn-text-secondary rounded-pill btn-icon shadow-none"><i class='icon-base ri ri-edit-line icon-18px'></i></a>
-                                <a href="/pais/Delete/@pais.Id" class="btn btn-sm btn-text-secondary rounded-pill btn-icon shadow-none delete-transaction" data-transaction-username="@Html.DisplayFor(modelItem => pais.Nombre)"><i class="icon-base ri ri-delete-bin-5-line icon-18px"></i></a>
+                                <a asp-action="Update" asp-route-id="@destino.Id" class="btn btn-sm btn-text-secondary rounded-pill btn-icon shadow-none"><i class='icon-base ri ri-edit-line icon-18px'></i></a>
+                                <a href="/destino/Delete/@destino.Id" class="btn btn-sm btn-text-secondary rounded-pill btn-icon shadow-none delete-transaction" data-transaction-username="@Html.DisplayFor(modelItem => destino.Nombre)"><i class="icon-base ri ri-delete-bin-5-line icon-18px"></i></a>
                             </td>
                         </tr>
                     }
@@ -183,31 +181,29 @@
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddUser" aria-labelledby="offcanvasAddUserLabel">
         <div class="offcanvas-header border-bottom">
-            <h5 id="offcanvasAddUserLabel" class="offcanvas-title">Agregar pais</h5>
+            <h5 id="offcanvasAddUserLabel" class="offcanvas-title">Agregar destino</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body mx-0 flex-grow-0 h-100">
 
-            <form asp-action="Add" asp-controller="pais" method="post">
+            <form asp-action="Add" asp-controller="destino" method="post">
                 <div class="form-group">
                     <label for="Nombre">Nombre</label>
                     <input type="text" name="Nombre" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label for="CodigoISO">Codigo ISO</label>
-                    <input type="text" name="CodigoISO" class="form-control" />
+                    <label for="CapacidadMaxima">Capacidad Maxima</label>
+                    <input type="text" name="CapacidadMaxima" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label for="IdiomaOficial">Idioma Oficial</label>
-                    <input type="text" name="IdiomaOficial" class="form-control" />
+                    <label for="TipoDestino">Tipo Destino</label>
+                    <input type="text" name="TipoDestino" class="form-control" />
                 </div>
-                <div class="form-group">
-                    <label for="Moneda">Moneda</label>
-                    <input type="text" name="Moneda" class="form-control" />
-                </div>
-                <div class="form-group form-check">
-                    <input class="form-check-input" type="checkbox" data-val="true" data-val-required="The RequiereVisa field is required." id="RequiereVisa" name="RequiereVisa" value="true">
-                    <label class="form-check-label" for="RequiereVisa">Requiere Visa</label>
+                <div class="form-floating form-floating-outline">
+                    <select asp-items="ViewBag.Paises" name="PaisId" id="select2Basic" class="form-control select2 form-select" data-allow-clear="true">
+                        <option value="">Seleccione un pais</option>
+                    </select>
+                    <label for="select2Basic" class="form-label">Pais</label>
                 </div>
                 <div class="form-group form-check">
                     <input class="form-check-input" type="checkbox" data-val="true" data-val-required="The Status field is required." id="Status" name="Status" value="true">
