@@ -17,7 +17,7 @@ namespace ProyectoFinalAgenciaTours.Domain.Entities
 
 
         public int DestinoId { get; set; }
-        public Destinos Destino { get; set; }
+        public Destino Destino { get; set; }
 
 
         public DateTime FechaInicio { get; set; }

@@ -16,7 +16,7 @@ namespace ProyectoFinalAgenciaTours.Domain.Entities
         public bool RequiereVisa { get; set; }
         public bool Status { get; set; }
 
-        public ICollection<Destinos> Destinos { get; set; }
+        public ICollection<Destino> Destinos { get; set; }
 
         public Pais()
         {
