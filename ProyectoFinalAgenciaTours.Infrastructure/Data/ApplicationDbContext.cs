@@ -13,7 +13,18 @@ namespace ProyectoFinalAgenciaTours.Infrastructure.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Pais> Paises { get; set; }
+        public DbSet<Destino> Destinos { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+   
+            builder.Entity<Destino>()
+                .HasOne(c => c.Pais)
+                .WithMany(e => e.Destinos)
+                .HasForeignKey(c => c.PaisId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+        }
 
     }
 }

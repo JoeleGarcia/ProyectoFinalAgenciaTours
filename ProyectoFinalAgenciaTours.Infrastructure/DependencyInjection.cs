@@ -25,6 +25,8 @@ namespace ProyectoFinalAgenciaTours.Infrastructure
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ISessionManager, SessionManagerRepository>();
             services.AddScoped<IPaisRepository, PaisRepository>();
+            services.AddScoped<IDestinoRepository, DestinoRepository>();
+
 
 
             services.AddAuthentication().AddCookie("MyCookieAuth", options =>
