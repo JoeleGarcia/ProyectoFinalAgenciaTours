@@ -29,10 +29,10 @@ namespace ProyectoFinalAgenciaTours.Application.Services
         {
             try
             {
-                var _materia = _mapper.Map<Pais>(createPaisDto);
-                var materiaAgregado = await _paisRepository.AddPaisAsync(_materia);
+                var _pais = _mapper.Map<Pais>(createPaisDto);
+                var paisAgregado = await _paisRepository.AddPaisAsync(_pais);
 
-                var CreatePaisDto = _mapper.Map<CreatePaisDto>(materiaAgregado);
+                var CreatePaisDto = _mapper.Map<CreatePaisDto>(paisAgregado);
                 
                 return CreatePaisDto;
 
