@@ -1,0 +1,97 @@
+﻿@model ProyectoFinalAgenciaTours.Application.DTOs.UpdateTourDto
+
+
+@{
+
+    ViewData["Title"] = "Update";
+
+    var _updateError = ViewData.ModelState["_addError"]?.Errors
+    .Select(e => e.ErrorMessage).FirstOrDefault(); ;
+}
+
+@section VendorStyles {
+
+    <link rel="stylesheet" href="~/vendor/libs/select2/select2.css" />
+    <link rel="stylesheet" href="~/vendor/libs/tagify/tagify.css" />
+    <link rel="stylesheet" href="~/vendor/libs/bootstrap-select/bootstrap-select.css" />
+    <link rel="stylesheet" href="~/vendor/libs/typeahead-js/typeahead.css" />
+
+
+}
+
+@section VendorScripts {
+
+    <script src="~/vendor/libs/select2/select2.js"></script>
+    <script src="~/vendor/libs/tagify/tagify.js"></script>
+    <script src="~/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+    <script src="~/vendor/libs/typeahead-js/typeahead.js"></script>
+    <script src="~/vendor/libs/bloodhound/bloodhound.js"></script>
+
+    <script src="~/js/main.js"></script>
+
+    <script src="~/js/forms-selects.js"></script>
+    <script src="~/js/forms-tagify.js"></script>
+
+
+}
+
+
+<form asp-action="Update" method="post">
+
+    @*<input type="hidden" asp-for="id" />*@
+
+    <div class="form-group">
+        <label asp-for="Nombre">Nombre</label>
+        <input asp-for="Nombre" class="form-control" />
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
+
+    <div class="form-floating form-floating-outline">
+        <select asp-for="PaisId" asp-items="ViewBag.Paises" id="select2Basic" class="form-control select2 form-select" data-allow-clear="true">
+            <option value="">Seleccione un pais</option>
+        </select>
+        <label for="select2Basic" class="form-label">Pais</label>
+        <span asp-validation-for="PaisId" class="text-danger"></span>
+    </div>
+    <div class="form-floating form-floating-outline">
+        <select asp-for="DestinoId" asp-items="ViewBag.Destinos" id="select2Basics" class="form-control select2 form-select" data-allow-clear="true">
+            <option value="">Seleccione un pais</option>
+        </select>
+        <label for="select2Basic" class="form-label">Destino</label>
+        <span asp-validation-for="DestinoId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Fecha">Fecha Inicio</label>
+        <input asp-for="Fecha" class="form-control" />
+        <span asp-validation-for="Fecha" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Hora">Hora</label>
+        <input asp-for="Hora" type="time" class="form-control" />
+        <span asp-validation-for="Hora" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TasaImpuesto">Tasa Impuesto</label>
+        <input asp-for="TasaImpuesto" class="form-control" />
+        <span asp-validation-for="TasaImpuesto" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Horas">Horas</label>
+        <input asp-for="Horas" class="form-control" />
+        <span asp-validation-for="Horas" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Precio">Precio</label>
+        <input asp-for="Precio" class="form-control" />
+        <span asp-validation-for="Precio" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+
+</form>
