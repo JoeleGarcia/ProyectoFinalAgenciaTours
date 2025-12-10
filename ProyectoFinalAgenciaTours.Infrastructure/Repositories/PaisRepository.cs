@@ -67,7 +67,7 @@ namespace ProyectoFinalAgenciaTours.Infrastructure.Repositories
         public async Task<Pais?> GetPaisByIdAsync(int id)
         {
             return await _dbcontext.Paises.AsNoTracking()
-                                            .FirstOrDefaultAsync(p => p.Id == id); ;
+                                            .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task UpdatePaisAsync(Pais pais)
