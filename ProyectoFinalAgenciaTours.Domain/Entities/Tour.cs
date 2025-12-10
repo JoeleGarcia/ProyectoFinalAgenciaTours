@@ -20,9 +20,19 @@ namespace ProyectoFinalAgenciaTours.Domain.Entities
         public Destino Destino { get; set; }
 
 
-        public DateTime FechaInicio { get; set; }
-        public TimeSpan HoraInicio { get; set; }
+        public DateTime Fecha { get; set; }
+        public TimeSpan Hora { get; set; }
+        public int Horas { get; set; }
+
+
+        public decimal TasaImpuesto { get; set; }
         public decimal Precio { get; set; }
+
+
+        public decimal ITBIS { get; set; }
+        public DateTime FechaFinalizacion { get; set; }
+        public string Duracion { get; set;}
+        public string Estado { get; set; }
 
 
 

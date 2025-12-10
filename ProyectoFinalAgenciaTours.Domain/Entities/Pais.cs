@@ -17,6 +17,7 @@ namespace ProyectoFinalAgenciaTours.Domain.Entities
         public bool Status { get; set; }
 
         public ICollection<Destino> Destinos { get; set; }
+        public ICollection<Tour> Tour { get; set; }
 
         public Pais()
         {
