@@ -18,8 +18,7 @@ namespace ProyectoFinalAgenciaTours.Application
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IPaisService, PaisService>();
             services.AddScoped<IDestinoService, DestinoService>();
-
-
+            services.AddScoped<ITourService, TourService>();
 
             services.AddAutoMapper(typeof(DependencyInjection).Assembly);
             return services;
