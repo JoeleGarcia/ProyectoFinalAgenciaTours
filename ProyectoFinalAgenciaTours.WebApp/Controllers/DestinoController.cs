@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -10,6 +11,7 @@ using ProyectoFinalAgenciaTours.WebApp.Models;
 
 namespace ProyectoFinalAgenciaTours.WebApp.Controllers
 {
+    [Authorize]
     public class DestinoController : Controller
     {
         private readonly ILogger<DestinoController> _logger;

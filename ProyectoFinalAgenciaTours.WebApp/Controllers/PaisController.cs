@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -9,6 +10,7 @@ using ProyectoFinalAgenciaTours.WebApp.Models;
 
 namespace ProyectoFinalAgenciaTours.WebApp.Controllers
 {
+    [Authorize]
     public class PaisController : Controller
     {
         private readonly ILogger<PaisController> _logger;
