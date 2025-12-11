@@ -14,10 +14,6 @@
     </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Validator\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ProyectoFinalAgenciaTours.Domain\ProyectoFinalAgenciaTours.Domain.csproj" />
   </ItemGroup>
 
