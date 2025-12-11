@@ -8,6 +8,7 @@ using ProyectoFinalAgenciaTours.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,6 +18,7 @@ namespace ProyectoFinalAgenciaTours.Application.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly ISessionManager _sessionManagerRepository;
+        private readonly ITokenService _tokenRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMapper _mapper;
 
@@ -24,18 +26,21 @@ namespace ProyectoFinalAgenciaTours.Application.Services
                 IUserRepository userRepository
             ,   ISessionManager sessionManagerRepository
             ,   IHttpContextAccessor httpContextAccessor
+            ,   ITokenService tokenRepository
             ,   IMapper mapper
         )
         {
             _userRepository = userRepository;
             _sessionManagerRepository = sessionManagerRepository;
+            _tokenRepository = tokenRepository;
             _httpContextAccessor = httpContextAccessor;
             _mapper = mapper;
         }
 
         public string GetUserId()
         {
-            throw new NotImplementedException();
+            string userId = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            return userId;
         }
 
         public Task<string> HashPassword(string password)
@@ -57,9 +62,19 @@ namespace ProyectoFinalAgenciaTours.Application.Services
             return new UsuarioDto(response.Id, response.Nombre, response.Apellido, response.Username, response.Email, response.Role, response.Status);
         }
 
-        public Task<LoginJwtResponseDto> LoginForJwtAsync(LoginUsuarioDto loginUsuarioDto)
+        public async Task<LoginJwtResponseDto> LoginForJwtAsync(LoginUsuarioDto loginUsuarioDto)
         {
-            throw new NotImplementedException();
+            var userDetails = await _userRepository.ValidateCredentialsAsync(loginUsuarioDto.Email, loginUsuarioDto.Password);
+
+            if (userDetails is null)
+            {
+                return null!;
+            }
+
+            var _user = _mapper.Map<UsuarioDto>(userDetails);
+
+            //throw new NotImplementedException();
+            return await _tokenRepository.GenerarJwt(_user);
         }
 
         public async Task LogoutAsync()
@@ -90,9 +105,18 @@ namespace ProyectoFinalAgenciaTours.Application.Services
             }
         }
 
-        public Task<UsuarioDto> UserInfo(string id)
+        public async Task<UsuarioDto> UserInfo(string id)
         {
-            throw new NotImplementedException();
+            if (!Guid.TryParse(id, out Guid _id))
+            {
+                throw new ArgumentException("El formato del ID proporcionado no es válido.");
+            }
+            var user = await _userRepository.GetUserByIdAsync(_id);
+
+            var _user = _mapper.Map<UsuarioDto>(user);
+
+            return _user;
+            //return new UsuarioDto(user.Id, user.Nombre, user.Apellido, user.Username, user.Email, user.Role, user.Status);
         }
     }
 }
