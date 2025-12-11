@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<ProyectoFinalAgenciaTours.Application.DTOs.TourDetailDto>;
 @using Newtonsoft.Json;
+@using System.Globalization;
 
 @{
     ViewData["Title"] = "tours - CRUD";
@@ -83,11 +84,26 @@
                     <th class="text-center">
                         @Html.DisplayNameFor(model => model.Duracion)
                     </th>
+                    <th class="text-center">
+                       Pais
+                    </th>
+                    <th class="text-center">
+                        Capacidad
+                    </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FechaFinalizacion)
+                        Finalizacion
+                    </th>
+                    <th>
+                        Precio
+                    </th>
+                   <th>
+                       Impuesto
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.ITBIS)
+                    </th>
+                    <th>
+                        Visa
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Estado)
@@ -108,7 +124,7 @@
                         {
                             statusClass = "success";
                         }
-                        else if (lowerCaseStatus.Equals(false))
+                        else if (lowerCaseStatus.Equals("No Vigente"))
                         {
                             statusClass = "warning";
                         }
@@ -130,7 +146,7 @@
                                                 @Html.DisplayFor(modelItem => tour.Nombre)
                                         </span>
                                     </a>
-                                    <small>@Html.DisplayFor(modelItem => tour.Pais.Nombre)</small>
+                                    <small>@Html.DisplayFor(modelItem => tour.Destino.Nombre)</small>
                                 </div>
                             </div>
                         </td>
@@ -140,12 +156,49 @@
                                 </div>*@
                             <span class="start-100 badge rounded-pill bg-primary">@(tour.Duracion)</span>
                         </td>
+                       <td class="text-nowrap fw-medium text-heading">
+                            @tour.Pais.Nombre
+                        </td>
+                        <td class="small text-center">
+                            @*<div class="avatar-initial py-2 bg-label-primary rounded">
+                                @(tour.Destino.CapacidadMaxima)
+                            </div>*@
+                            <div class="d-flex gap-2 align-items-center mb-0">
+                                <div class="avatar avatar-xs flex-shrink-0">
+                                    <div class="avatar-initial rounded bg-label-primary">
+                                        <i class="icon-base ri ri-team-fill icon-16px"></i>
+                                    </div>
+                                </div>
+                                <h6 class="mb-0"> @(tour.Destino.CapacidadMaxima)</h6>
+                            </div>
+                        </td>
                         <td class="text-nowrap fw-medium text-heading">
                             @tour.FechaFinalizacion.ToString("dd/MM/yyyy")
                         </td>
                         <td class="text-nowrap fw-medium text-heading">
-                            @Html.DisplayFor(modelItem => tour.ITBIS)
+                            @(tour.Precio.ToString("N2", CultureInfo.InvariantCulture))
 
+                        </td>
+                        <td class="text-nowrap fw-medium text-heading">
+                            @(tour.TasaImpuesto.ToString("N2", CultureInfo.InvariantCulture))%
+
+                        </td>
+                        <td class="text-nowrap fw-medium text-heading">
+                            @(tour.ITBIS.ToString("N2", CultureInfo.InvariantCulture))
+
+                        </td>
+                        <td class="text-center text-nowrap fw-medium text-heading">
+                            @*@tour.Pais.RequiereVisa*@
+                            @if (tour.Pais.RequiereVisa.Equals(true))
+                            {
+                                @("Sí");
+
+                            }
+
+                            @if (tour.Pais.RequiereVisa.Equals(false))
+                            {
+                                @("No");
+                            }
                         </td>
                         <td>
                             <div class="badge bg-label-@statusClass rounded-pill">
@@ -157,9 +210,9 @@
 
                                 }
 
-                                @if (tour.Estado.Equals("Vencido"))
+                                @if (tour.Estado.Equals("No Vigente"))
                                 {
-                                    @("Vencido");
+                                    @("No Vigente");
                                 }
 
                             </div>
@@ -169,7 +222,7 @@
                             <a href="/tour/Delete/@tour.Id" class="btn btn-sm btn-text-secondary rounded-pill btn-icon shadow-none delete-transaction" data-transaction-username="@Html.DisplayFor(modelItem => tour.Nombre)"><i class="icon-base ri ri-delete-bin-5-line icon-18px"></i></a>
                         </td>
                     </tr>
-                }
+                     }
                 }
             </tbody>
         </table>
@@ -185,6 +238,13 @@
         <div class="offcanvas-body mx-0 flex-grow-0 h-100">
 
             <form asp-action="Add" asp-controller="tour" method="post">
+
+            <div class="form-floating form-floating-outline">
+                 <select asp-items="ViewBag.Paises" name="PaisId" id="select2Basic" class="form-control select2 form-select" data-allow-clear="true">
+                     <option value="">Seleccione un pais</option>
+                 </select>
+                 <label for="select2Basic" class="form-label">Pais</label>
+             </div>
                 <div class="form-group">
                     <label for="Nombre">Nombre</label>
                     <input type="text" name="Nombre" class="form-control" />
@@ -193,17 +253,12 @@
                     <label for="Hora">Hora</label>
                     <input type="text" name="Hora" class="form-control" />
                 </div>
-                <div class="form-floating form-floating-outline">
-                    <select asp-items="ViewBag.Paises" name="PaisId" id="select2Basic" class="form-control select2 form-select" data-allow-clear="true">
-                        <option value="">Seleccione un pais</option>
-                    </select>
-                    <label for="select2Basic" class="form-label">Pais</label>
-                </div>
+   
                 <div class="form-floating form-floating-outline">
                     <select asp-items="ViewBag.Destinos" name="DestinoId" id="select2Basic" class="form-control select2 form-select" data-allow-clear="true">
                         <option value="">Seleccione un destino</option>
                     </select>
-                    <label for="select2Basic" class="form-label">Pais</label>
+                    <label for="select2Basic" class="form-label">Destino</label>
                 </div>
                 <div class="form-group">
                     <label for="Fecha">Fecha</label>

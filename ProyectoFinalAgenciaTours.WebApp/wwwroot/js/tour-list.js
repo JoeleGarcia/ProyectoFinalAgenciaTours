@@ -333,8 +333,22 @@ document.addEventListener('DOMContentLoaded', function (e) {
         {
           // For Email
           targets: 3,
-          responsivePriority: 4
-        },
+          responsivePriority: 9
+          },
+          {
+              // For Email
+              targets: 4,
+              responsivePriority: 9
+          }, {
+              // For Email
+              targets: 9,
+              responsivePriority: 5
+          },
+          {
+              // For Email
+              targets: 10,
+              responsivePriority: 1
+          },
         
         {
           // For Actions
