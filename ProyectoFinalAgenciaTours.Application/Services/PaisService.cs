@@ -85,7 +85,9 @@ namespace ProyectoFinalAgenciaTours.Application.Services
                 throw new NotFoundException("Pais", id);
             }
 
-            var updatedPais = _mapper.Map<Pais>(updatePaisDto);        
+            var updatedPais = _mapper.Map<Pais>(updatePaisDto);  
+            
+            updatedPais.Id = id;    
 
             await _paisRepository.UpdatePaisAsync(updatedPais);
         }

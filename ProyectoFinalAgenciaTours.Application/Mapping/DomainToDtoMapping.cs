@@ -25,6 +25,8 @@ namespace ProyectoFinalAgenciaTours.Application.Mapping
             CreateMap<Tour, TourDetailDto>();
             CreateMap<Tour, CreateTourDto>();
 
+            CreateMap<Usuario, UsuarioDto>();
+
 
         }
     }
